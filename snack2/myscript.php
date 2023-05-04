@@ -1,8 +1,13 @@
 <?php
-$name = $_POST["name"];
-$email = $_POST["email"];
-$age = $_POST["age"];
-//<?php echo strlen($censored);
+$name = $_GET["name"];
+$email = $_GET["email"];
+$age = $_GET["age"];
+//salvo tutto all'interno di alcune variabili
+$nameCheck = strlen($name) > 3;
+$emailCheckDOT = str_contains($email, ".");
+$emailCheckAT = str_contains($email, "@");
+$ageCheck = is_numeric($age);
+// che non userò
 ?>
 
 <!DOCTYPE html>
@@ -20,28 +25,25 @@ $age = $_POST["age"];
 </head>
 
 <body>
-
-<?php
-
-if ($name < "3" && ) {
-  echo "Access Denied";
-} else {
-  echo "Access Succed";
-}
-?>
-
-
-  <div class="container text-center my-5">
-    <h1 class="text-danger my-4">Your insert data</h1>
-    <div class="row m">
-      <div class="mb-5 d-flex flex-column gap-4">
-        <h3>Welcome Mr. / Mrs. <?php echo $name; ?></h3>
-        <h3>Your age is <?php echo $age; ?></h3>
-        <h5>Your email is : <strong><?php echo $email; ?></strong></h5>
+  <?php if (strlen($name) > 3 && str_contains($email, ".") && str_contains($email, "@") && is_numeric($age)) : ?>
+    <div class="container text-center my-5">
+      <h1 class="text-success my-4">ACCESS SUCCESS</h1>
+      <div class="row">
+        <div class="mb-5 d-flex flex-column gap-4">
+          <h3>Welcome Mr. / Mrs. <?php echo $name; ?></h3>
+          <h3>Your age is <?php echo $age; ?></h3>
+          <h5>Your email is : <strong><?php echo $email; ?></strong></h5>
+        </div>
       </div>
+      <a name="new" id="new" class="btn btn-secondary" href="./index.php">New User</a>
     </div>
-    <a name="new" id="new" class="btn btn-secondary" href="./index.php">New User</a>
-  </div>
+  <?php else : ?>
+    <div class="container text-center my-5">
+      <h1 class="text-danger my-4">ACCESS DENIED</h1>
+      <a name="new" id="new" class="btn btn-secondary" href="./index.php">New User</a>
+    </div>
+    </div>
+  <?php endif; ?>
 </body>
 
 </html>
